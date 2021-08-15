@@ -54,8 +54,8 @@ minm = Entry(root)
 def output():
     d = maxm.get()
     x = minm.get()
-    doc = open("out.txt","w")
-    doc.write("@echo off\n"+javal.get()+" -Xms"+x+" -Xmx"+d+" -jar "+fwqhxl.get()+"\n"+"pause>nul")
+    doc = open("打开我来启动游戏.bat","w")
+    doc.write("@echo off\n"+"\""+javal.get()+"\" -Xms"+x+"G -Xmx"+d+"G -jar \""+fwqhxl.get()+"\"\n"+"pause>nul")
     doc.close()
 
 maxm.grid(row = 2, column = 1)
