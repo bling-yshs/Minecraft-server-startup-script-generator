@@ -31,11 +31,11 @@ Button(root, text = "选择服务器核心路径", command = xzfwqhxl).grid(row 
 
 #----------------------------------
 
-Label(root,text = "最大内存:").grid(row = 2, column = 0,padx=10,pady=5)
+Label(root,text = "最大内存(G):").grid(row = 2, column = 0,padx=10,pady=5)
 
 maxm = Entry(root)
 
-Label(root,text = "最小内存:").grid(row = 3, column = 0,padx=10,pady=5)
+Label(root,text = "最小内存(G):").grid(row = 3, column = 0,padx=10,pady=5)
 
 minm = Entry(root)
 
@@ -44,7 +44,7 @@ def output():
     d = maxm.get()
     x = minm.get()
     doc = open("打开我来启动游戏.bat","w")
-    doc.write("@echo off\n"+"\""+javal.get()+"\" -Xms"+x+"G -Xmx"+d+"G -jar \""+fwqhxl.get()+"\"\n"+"pause>nul")
+    doc.write("@echo off\n"+"\""+javal.get()+"\" -Xms"+x+"G -Xmx"+d+"G -jar \""+fwqhxl.get()+"\"\n"+"pause")
     doc.close()
 
 maxm.grid(row = 2, column = 1)
