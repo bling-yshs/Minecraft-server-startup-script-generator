@@ -2,15 +2,13 @@ from tkinter import *
 from tkinter import filedialog
 
 root = Tk()
-root.title("服务器脚本生成器")
+root.title("简易MC服务器启动脚本生成器")
 #----------------------------------
-
 javal = StringVar() 
 
 def xzjaval():
     openjaval = filedialog.askopenfilename(filetypes=[("Exe Files", "*.exe")])
     javal.set(openjaval) 
-
 
 Label(root,text = "Java路径:").grid(row = 0, column = 0,padx=10,pady=5)
 
@@ -19,7 +17,6 @@ Entry(root, textvariable = javal).grid(row = 0, column = 1,padx=10,pady=5)
 Button(root, text = "选择Java路径", command = xzjaval).grid(row = 0, column = 2,padx=10,pady=5)
 
 #----------------------------------
-
 fwqhxl = StringVar()
 
 def xzfwqhxl():
@@ -42,10 +39,7 @@ Label(root,text = "最小内存:").grid(row = 3, column = 0,padx=10,pady=5)
 
 minm = Entry(root)
 
-
-
 #----------------------------------
-
 def output():
     d = maxm.get()
     x = minm.get()
@@ -55,7 +49,6 @@ def output():
 
 maxm.grid(row = 2, column = 1)
 minm.grid(row = 3, column = 1)
-
 
 Button(root, text = "生成.bat文件", command = output).grid(row = 4, column = 0,pady=10)
 
