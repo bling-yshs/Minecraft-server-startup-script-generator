@@ -9,15 +9,11 @@ window = Tk()
 # 初始化窗口
 window.title("MC服务器启动脚本生成器")
 # 标题
-# window.iconbitmap("img.ico")
-# 设置左上角图标
-
-
-
 
 
 javapath = StringVar()
 # 定义java路径变量
+
 
 def seljava():
     openjavapath = filedialog.askopenfilename(
@@ -76,7 +72,7 @@ OptionMenu(window, seltype, "原版 | Fabric | 旧版Forge 服务器", "新版 F
 
 # 下拉框
 
-# 生成批处理文件----------------------------------
+# <生成批处理文件----------------------------------
 
 
 def output():
@@ -102,13 +98,14 @@ def output():
     messagebox.showinfo("提示", "脚本生成成功")
 
 
-# 生成批处理文件----------------------------------
+# ----------------------------------生成批处理文件>
+
+
 Button(window, text="生成.bat文件", command=output).grid(
     row=4, column=2, padx=10, pady=5)
 # 生成.bat
 
-
-# 设置窗口居中----------
+# <设置窗口居中----------------------------------
 
 
 def set_win_center(window, curWidth="", curHight=""):
@@ -123,10 +120,11 @@ def set_win_center(window, curWidth="", curHight=""):
 
 window.update()
 set_win_center(window)
-# 设置窗口居中----------
+# ----------------------------------设置窗口居中>
+
 window.resizable(0, 0)
 # 不可拉伸
 window.mainloop()
 # 消息循环
 
-# 打包 pyinstaller -F -w -i img.ico main.py
+# 打包 pyinstaller -F -w -i icon.ico main.py
