@@ -1,7 +1,9 @@
+import ctypes
 from tkinter import *
 import os
 from tkinter import filedialog
 from tkinter import messagebox
+from tkinter.ttk import *
 # 导入库
 
 
@@ -9,13 +11,11 @@ window = Tk()
 # 初始化窗口
 window.title("MC服务器启动脚本生成器")
 # 标题
-import ctypes
-#告诉操作系统使用程序自身的dpi适配
 ctypes.windll.shcore.SetProcessDpiAwareness(1)
-#获取屏幕的缩放因子
-ScaleFactor=ctypes.windll.shcore.GetScaleFactorForDevice(0)
+# 告诉操作系统使用程序自身的dpi适配
+ScaleFactor = ctypes.windll.shcore.GetScaleFactorForDevice(0)
+# 获取屏幕的缩放因子
 window.tk.call('tk', 'scaling', ScaleFactor/75)
-
 
 
 javapath = StringVar()
@@ -74,8 +74,8 @@ min_memory.grid(row=3, column=1)
 # 以下第五行----------------------------------
 seltype = StringVar()
 seltype.set("原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器")
-OptionMenu(window, seltype, "原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器", "新版 Forge 服务器",
-           "Paper 插件服务器").grid(row=4, pady=5, padx=10, columnspan=2, sticky=N+E+W)
+OptionMenu(window, seltype, "原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器", "原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器",
+           "新版 Forge 服务器", "Paper 插件服务器").grid(row=4, pady=5, padx=10, columnspan=2, sticky=N+E+W)
 
 
 # 下拉框
