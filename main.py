@@ -9,6 +9,13 @@ window = Tk()
 # 初始化窗口
 window.title("MC服务器启动脚本生成器")
 # 标题
+import ctypes
+#告诉操作系统使用程序自身的dpi适配
+ctypes.windll.shcore.SetProcessDpiAwareness(1)
+#获取屏幕的缩放因子
+ScaleFactor=ctypes.windll.shcore.GetScaleFactorForDevice(0)
+window.tk.call('tk', 'scaling', ScaleFactor/75)
+
 
 
 javapath = StringVar()
@@ -22,10 +29,10 @@ def seljava():
 # 定义 选择Java路径 的函数
 
 
-Label(window, text="Java路径:").grid(row=0, column=0, padx=10, pady=5)
+Label(window, text="Java路径:").grid(row=0, column=0, padx=40, pady=5)
 # 文本 Java路径:
 Entry(window, textvariable=javapath).grid(
-    row=0, column=1, padx=10, pady=5)
+    row=0, column=1, padx=40, pady=5)
 # 文本框 Java路径
 Button(window, text="选择Java路径", command=seljava).grid(
     row=0, column=2, padx=10, pady=5)
@@ -66,9 +73,10 @@ min_memory.grid(row=3, column=1)
 
 # 以下第五行----------------------------------
 seltype = StringVar()
-seltype.set("原版 | Fabric | 旧版Forge 服务器")
-OptionMenu(window, seltype, "原版 | Fabric | 旧版Forge 服务器", "新版 Forge 服务器",
+seltype.set("原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器")
+OptionMenu(window, seltype, "原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器", "新版 Forge 服务器",
            "Paper 插件服务器").grid(row=4, pady=5, padx=10, columnspan=2, sticky=N+E+W)
+
 
 # 下拉框
 
@@ -80,7 +88,7 @@ def output():
     finally_seltype = seltype.get()
     d = max_memory.get()
     x = min_memory.get()
-    if finally_seltype == "原版 | Fabric | 旧版Forge 服务器":
+    if finally_seltype == "原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器":
         doc = open("打开我来启动游戏.bat", "w")
         doc.write("@echo off\n"+"\""+javapath.get()+"\" -Xms"+x +
                   "G -Xmx"+d+"G -jar \""+serverpath.get()+"\"\n"+"pause")
