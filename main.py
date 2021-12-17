@@ -9,6 +9,10 @@ from tkinter.ttk import *
 
 window = Tk()
 # 初始化窗口
+
+window.withdraw()
+# 隐藏窗口防止闪烁
+
 window.title("MC服务器启动脚本生成器")
 # 标题
 ctypes.windll.shcore.SetProcessDpiAwareness(1)
@@ -132,6 +136,10 @@ set_win_center(window)
 
 window.resizable(0, 0)
 # 不可拉伸
+
+window.deiconify()
+# 恢复窗口显示
+
 window.mainloop()
 # 消息循环
 
