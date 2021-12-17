@@ -4,6 +4,8 @@ import os
 from tkinter import filedialog
 from tkinter import messagebox
 from tkinter.ttk import *
+import base64
+from icon import img
 # 导入库
 
 
@@ -137,8 +139,15 @@ set_win_center(window)
 window.resizable(0, 0)
 # 不可拉伸
 
+tmp = open("tmp.ico", "wb+")
+tmp.write(base64.b64decode(img))
+tmp.close()
+window.iconbitmap("tmp.ico")
+os.remove("tmp.ico")
+
 window.deiconify()
 # 恢复窗口显示
+
 
 window.mainloop()
 # 消息循环
