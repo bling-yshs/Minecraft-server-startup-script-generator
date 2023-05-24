@@ -6,6 +6,7 @@ from tkinter import messagebox
 from tkinter.ttk import *
 import base64
 from icon import img
+
 # 导入库
 
 
@@ -21,44 +22,47 @@ ctypes.windll.shcore.SetProcessDpiAwareness(1)
 # 告诉操作系统使用程序自身的dpi适配
 ScaleFactor = ctypes.windll.shcore.GetScaleFactorForDevice(0)
 # 获取屏幕的缩放因子
-window.tk.call('tk', 'scaling', ScaleFactor/75)
+window.tk.call('tk', 'scaling', ScaleFactor / 75)
+
+java_path = StringVar()
 
 
-javapath = StringVar()
 # 定义java路径变量
 
 
-def seljava():
-    openjavapath = filedialog.askopenfilename(
-        title="请选择 Java", initialdir="C:\Program Files\Java", filetypes=[("Java Files", "java.exe")])
-    javapath.set(openjavapath)
+def select_java():
+    open_java_path = filedialog.askopenfilename(
+        title="请选择 Java", initialdir="C:\\Program Files\\Java", filetypes=[("Java Files", "java.exe")])
+    java_path.set(open_java_path)
+
+
 # 定义 选择Java路径 的函数
 
 
 Label(window, text="Java路径:").grid(row=0, column=0, padx=40, pady=5)
 # 文本 Java路径:
-Entry(window, textvariable=javapath).grid(
+Entry(window, textvariable=java_path).grid(
     row=0, column=1, padx=40, pady=5)
 # 文本框 Java路径
-Button(window, text="选择Java路径", command=seljava).grid(
+Button(window, text="选择Java路径", command=select_java).grid(
     row=0, column=2, padx=10, pady=5)
 # 按钮 选择Java路径
 
 # 以下第二行----------------------------------
-serverpath = StringVar()
+server_path = StringVar()
 
 
-def selserverjar():
-    openserverpath = filedialog.askopenfilename(
+def select_server_jar():
+    open_server_path = filedialog.askopenfilename(
         title="请选择服务器核心", initialdir=os.getcwd(), filetypes=[("Any Files", "")])
-    serverpath.set(openserverpath)
+    server_path.set(open_server_path)
 
 
 Label(window, text="服务器核心路径:").grid(row=1, column=0, padx=10, pady=5)
 
-Entry(window, textvariable=serverpath).grid(row=1, column=1, padx=10, pady=5)
+Entry(window, textvariable=server_path).grid(row=1, column=1, padx=10, pady=5)
 
-Button(window, text="选择服务器核心路径", command=selserverjar).grid(
+Button(window, text="选择服务器核心路径", command=select_server_jar).grid(
     row=1, column=2, padx=10, pady=5)
 
 # 以下第三行----------------------------------
@@ -78,10 +82,11 @@ min_memory = Entry(window)
 min_memory.grid(row=3, column=1)
 
 # 以下第五行----------------------------------
-seltype = StringVar()
-seltype.set("原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器")
-OptionMenu(window, seltype, "原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器", "原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器",
-           "新版 Forge 服务器", "Paper 插件服务器").grid(row=4, pady=5, padx=10, columnspan=2, sticky=N+E+W)
+select_type = StringVar()
+select_type.set("原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器")
+OptionMenu(window, select_type, "原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器",
+           "原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器",
+           "新版 Forge 服务器", "Paper 插件服务器").grid(row=4, pady=5, padx=10, columnspan=2, sticky=N + E + W)
 
 
 # 下拉框
@@ -90,53 +95,52 @@ OptionMenu(window, seltype, "原版 | Fabric | 旧版 Forge 服务器 | 水龙�
 
 
 def output():
-    only_server_name = os.path.basename(serverpath.get())
-    finally_seltype = seltype.get()
+    only_server_name = os.path.basename(server_path.get())
+    finally_select_type = select_type.get()
     d = max_memory.get()
     x = min_memory.get()
-    if finally_seltype == "原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器":
-        doc = open("打开我来启动游戏.bat", "w")
-        doc.write("@echo off\n"+"\""+javapath.get()+"\" -Xms"+x +
-                  "G -Xmx"+d+"G -jar \""+serverpath.get()+"\"\n"+"pause")
-    elif finally_seltype == "新版 Forge 服务器":
-        doc = open("打开我来启动游戏.bat", "w")
-        doc.write("@echo off\n"+"\""+javapath.get()+"\" -Xms"+x +
-                  "G -Xmx"+d+"G "+"@\""+serverpath.get()+"\"\n"+"pause")
-    elif finally_seltype == "Paper 插件服务器":
-        doc = open("打开我来启动游戏.bat", "w")
-        doc.write("@echo off\n"+"\""+javapath.get()+"\" -Xms"+x +
-                  "G -Xmx"+d+"G -jar "+only_server_name+"\n"+"pause")
+    filename = "打开我来启动游戏.bat"
+    if finally_select_type == "原版 | Fabric | 旧版 Forge 服务器 | 水龙头服务器":
+        with open(filename, "w") as doc:
+            doc.write(f'@echo off\n"{java_path.get()}" -Xms{x}G -Xmx{d}G -jar "{server_path.get()}"\npause')
+    elif finally_select_type == "新版 Forge 服务器":
+        with open(filename, "w") as doc:
+            doc.write(f'@echo off\n"{java_path.get()}" -Xms{x}G -Xmx{d}G @"{server_path.get()}"\npause')
+    elif finally_select_type == "Paper 插件服务器":
+        with open(filename, "w") as doc:
+            doc.write(f'@echo off\n"{java_path.get()}" -Xms{x}G -Xmx{d}G -jar {only_server_name}\npause')
     else:
-        print("nooooo")
-    doc.close()
+        messagebox.showerror("错误", "未知服务器类型")
+        return
     messagebox.showinfo("提示", "脚本生成成功")
-
 
 # ----------------------------------生成批处理文件>
 
 
 Button(window, text="生成.bat文件", command=output).grid(
     row=4, column=2, padx=10, pady=5)
+
+
 # 生成.bat
 
 # <设置窗口居中----------------------------------
 
 
-def set_win_center(window, curWidth="", curHight=""):
-    curWidth = window.winfo_width()
-    curHight = window.winfo_height()
-    scn_w, scn_h = window.maxsize()
-    cen_x = (scn_w - curWidth) / 2
-    cen_y = (scn_h - curHight) / 2
-    size_xy = "%dx%d+%d+%d" % (curWidth, curHight, cen_x, cen_y)
-    window.geometry(size_xy)
+def set_win_center(root):
+    cur_width = root.winfo_width()
+    cur_height = root.winfo_height()
+    scn_w, scn_h = root.maxsize()
+    cen_x = (scn_w - cur_width) / 2
+    cen_y = (scn_h - cur_height) / 2
+    size_xy = "%dx%d+%d+%d" % (cur_width, cur_height, cen_x, cen_y)
+    root.geometry(size_xy)
 
 
 window.update()
 set_win_center(window)
 # ----------------------------------设置窗口居中>
 
-window.resizable(0, 0)
+window.resizable(False, False)
 # 不可拉伸
 
 tmp = open("tmp.ico", "wb+")
