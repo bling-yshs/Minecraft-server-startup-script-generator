@@ -6,10 +6,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 from tkinter.ttk import *
 import base64
-
 import requests
-from bs4 import BeautifulSoup
-
 from icon import img
 
 # 导入库
