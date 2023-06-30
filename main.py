@@ -1,4 +1,5 @@
 import ctypes
+import threading
 from tkinter import *
 import os
 from tkinter import filedialog
@@ -35,7 +36,8 @@ server_button_name.set("下载服务器核心")
 def download_minecraft_server():
     if check_server_exist():
         return
-    download_minecraft_server_main_method()
+    download_thread = threading.Thread(target=download_minecraft_server_main_method)
+    download_thread.start()
 
 
 def check_server_exist():
@@ -52,30 +54,21 @@ def check_server_exist():
 
 
 def download_minecraft_server_main_method():
-    original_url = "https://mcversions.net/download/"
-    new_url = original_url + mc_version.get()
+    server_button_name.set("正在下载...")
+    original_url = "https://bmclapi2.bangbang93.com/version/"
+    new_url = original_url + mc_version.get() + "/server"
     response = requests.get(new_url)
     if response.status_code != 200:
         messagebox.showerror("错误", "该网址不存在或无法访问")
         server_button_name.set("下载服务器核心")
         return
-    response.encoding = 'utf-8'  # 设置编码格式为utf-8
-    # 解析HTML页面标签
-    soup = BeautifulSoup(response.text, 'html.parser')
-    # 获取所有链接
-    links = soup.find_all('a')
-    # 筛选server.jar结尾的链接并输出
-    for link in links:
-        href = link.get('href')
-        if href and href.endswith('server.jar'):
-            server_button_name.set("正在下载...")
-            # 下载文件
-            r = requests.get(href)
-            with open("server.jar", "wb") as code:
-                code.write(r.content)
-            server_button_name.set("下载服务器核心")
-            messagebox.showinfo("下载完成", "下载完成")
-            return
+
+    # 下载文件
+    with open("server.jar", "wb") as code:
+        code.write(response.content)
+    server_button_name.set("下载服务器核心")
+    messagebox.showinfo("下载完成", "下载完成")
+    return
 
 
 # 第一行
